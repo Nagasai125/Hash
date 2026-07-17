@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 const collections = [
   {
     name: "Vapes",
@@ -67,12 +65,10 @@ export default function Home() {
       </header>
 
       <section className="hero" id="top" aria-labelledby="hero-title">
-        <Image
+        <img
           src="/images/vape.jpg"
           alt="Real vape device with natural vapor rising behind it"
-          fill
-          priority
-          sizes="100vw"
+          fetchPriority="high"
           className="hero__photo"
         />
         <div className="hero__shade" />
@@ -127,11 +123,10 @@ export default function Home() {
         <div className="collection-grid">
           {collections.map((item, index) => (
             <article className={item.className} key={item.name}>
-              <Image
+              <img
                 src={item.image}
                 alt={item.alt}
-                fill
-                sizes="(max-width: 760px) 100vw, 50vw"
+                loading="lazy"
                 className="collection__photo"
               />
               <div className="collection__veil" />
