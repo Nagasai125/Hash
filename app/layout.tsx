@@ -20,6 +20,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preload" href="/man-logo-mark.svg" as="image" type="image/svg+xml" />
+      </head>
       <body className={geist.variable}>{children}</body>
     </html>
   );

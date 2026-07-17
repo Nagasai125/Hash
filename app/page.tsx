@@ -57,6 +57,10 @@ function Wordmark() {
 export default function Home() {
   return (
     <main>
+      <div className="site-intro" aria-hidden="true">
+        <img src="/man-logo-mark.svg" alt="" />
+        <span>North Austin</span>
+      </div>
       <div className="age-note">21+ • Please enjoy responsibly</div>
 
       <header className="nav shell">
