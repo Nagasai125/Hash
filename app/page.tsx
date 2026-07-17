@@ -40,8 +40,7 @@ const collections = [
 function Logo() {
   return (
     <span className="logo" aria-label="# Smoke Shop">
-      <span className="logo__mark">#</span>
-      <span className="logo__type">SMOKE SHOP</span>
+      <img src="/man-logo-mark.png" alt="" className="logo__image" />
     </span>
   );
 }
@@ -72,9 +71,12 @@ export default function Home() {
           className="hero__photo"
         />
         <div className="hero__shade" />
-        <div className="hero__hash" aria-hidden="true">
-          #
-        </div>
+        <img
+          src="/man-logo-mark.png"
+          alt=""
+          className="hero__brandmark"
+          aria-hidden="true"
+        />
         <div className="hero__content shell">
           <p className="kicker"><span>Austin</span> • North Lamar</p>
           <h1 id="hero-title">Find your<br />new ritual.</h1>
@@ -145,7 +147,6 @@ export default function Home() {
       </section>
 
       <section className="visit" id="visit" aria-labelledby="visit-title">
-        <div className="visit__glow" aria-hidden="true">#</div>
         <div className="visit__content shell">
           <p className="section-label">Come through</p>
           <h2 id="visit-title">Right here<br />on North Lamar.</h2>
