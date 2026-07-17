@@ -37,10 +37,12 @@ const collections = [
   },
 ];
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 function HeaderLogo() {
   return (
     <span className="header-logo" aria-label="# Smoke Shop">
-      <img src="/man-logo-mark.svg" alt="" />
+      <img src={`${basePath}/man-logo-mark.svg`} alt="" />
     </span>
   );
 }
@@ -58,7 +60,7 @@ export default function Home() {
   return (
     <main>
       <div className="site-intro" aria-hidden="true">
-        <img src="/man-logo-mark.svg" alt="" />
+        <img src={`${basePath}/man-logo-mark.svg`} alt="" />
         <span>North Austin</span>
       </div>
       <div className="age-note">21+ • Please enjoy responsibly</div>
@@ -78,7 +80,7 @@ export default function Home() {
 
       <section className="hero" id="top" aria-labelledby="hero-title">
         <img
-          src="/images/vape.jpg"
+          src={`${basePath}/images/vape.jpg`}
           alt="Real vape device with natural vapor rising behind it"
           fetchPriority="high"
           className="hero__photo"
@@ -134,7 +136,7 @@ export default function Home() {
           {collections.map((item, index) => (
             <article className={item.className} key={item.name}>
               <img
-                src={item.image}
+                src={`${basePath}${item.image}`}
                 alt={item.alt}
                 loading="lazy"
                 className="collection__photo"

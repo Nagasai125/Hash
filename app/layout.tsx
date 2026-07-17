@@ -1,19 +1,15 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
 import "./globals.css";
 
-const geist = Geist({
-  variable: "--font-geist",
-  subsets: ["latin"],
-});
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export const metadata: Metadata = {
   title: "# Smoke Shop | North Austin",
   description:
     "North Austin smoke shop for vapes, cigars, glass, hookah, and everyday essentials at 10014 N Lamar Blvd.",
   icons: {
-    icon: "/man-logo-mark.svg",
-    apple: "/man-logo-mark.png",
+    icon: `${basePath}/man-logo-mark.svg`,
+    apple: `${basePath}/man-logo-mark.png`,
   },
 };
 
@@ -21,9 +17,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <head>
-        <link rel="preload" href="/man-logo-mark.svg" as="image" type="image/svg+xml" />
+        <link rel="preload" href={`${basePath}/man-logo-mark.svg`} as="image" type="image/svg+xml" />
       </head>
-      <body className={geist.variable}>{children}</body>
+      <body>{children}</body>
     </html>
   );
 }
