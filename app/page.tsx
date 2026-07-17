@@ -37,10 +37,19 @@ const collections = [
   },
 ];
 
-function Logo() {
+function HeaderLogo() {
+  return (
+    <span className="header-logo" aria-label="# Smoke Shop">
+      <img src="/man-logo-mark.svg" alt="" />
+    </span>
+  );
+}
+
+function Wordmark() {
   return (
     <span className="logo" aria-label="# Smoke Shop">
-      <img src="/man-logo-mark.png" alt="" className="logo__image" />
+      <span className="logo__mark">#</span>
+      <span className="logo__type">SMOKE SHOP</span>
     </span>
   );
 }
@@ -52,7 +61,7 @@ export default function Home() {
 
       <header className="nav shell">
         <a className="nav__brand" href="#top" aria-label="# Smoke Shop home">
-          <Logo />
+          <HeaderLogo />
         </a>
         <nav aria-label="Main navigation">
           <a href="#catalog">Catalog</a>
@@ -71,12 +80,7 @@ export default function Home() {
           className="hero__photo"
         />
         <div className="hero__shade" />
-        <img
-          src="/man-logo-mark.png"
-          alt=""
-          className="hero__brandmark"
-          aria-hidden="true"
-        />
+        <div className="hero__hash" aria-hidden="true">#</div>
         <div className="hero__content shell">
           <p className="kicker"><span>Austin</span> • North Lamar</p>
           <h1 id="hero-title">Find your<br />new ritual.</h1>
@@ -147,6 +151,7 @@ export default function Home() {
       </section>
 
       <section className="visit" id="visit" aria-labelledby="visit-title">
+        <div className="visit__glow" aria-hidden="true">#</div>
         <div className="visit__content shell">
           <p className="section-label">Come through</p>
           <h2 id="visit-title">Right here<br />on North Lamar.</h2>
@@ -168,7 +173,7 @@ export default function Home() {
       </section>
 
       <footer className="footer shell">
-        <Logo />
+        <Wordmark />
         <p>North Austin&apos;s smoke shop.</p>
         <p>For adults 21+ only.</p>
       </footer>

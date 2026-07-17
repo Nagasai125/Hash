@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description:
     "North Austin smoke shop for vapes, cigars, glass, hookah, and everyday essentials at 10014 N Lamar Blvd.",
   icons: {
-    icon: "/man-logo-mark.png",
+    icon: "/man-logo-mark.svg",
     apple: "/man-logo-mark.png",
   },
 };
