@@ -70,6 +70,7 @@ export default function Home() {
           <HeaderLogo />
         </a>
         <nav aria-label="Main navigation">
+          <a href="#story">Our story</a>
           <a href="#catalog">Catalog</a>
           <a href="#visit">Visit</a>
           <a className="nav__call" href="tel:+15125687868">
@@ -156,6 +157,27 @@ export default function Home() {
         </p>
       </section>
 
+      <section className="story shell" id="story" aria-labelledby="story-title">
+        <p className="section-label">Our story</p>
+        <div className="story__grid">
+          <h2 id="story-title">More than a shop.<br />A familiar place.</h2>
+          <div className="story__copy">
+            <p>
+              The best neighborhood shops become part of life&apos;s small rituals—a
+              familiar face after a long day, an honest recommendation, a place
+              where you never feel rushed or judged.
+            </p>
+            <p>
+              That&apos;s the feeling behind # Smoke Shop. We&apos;re here to remember
+              what you like, help you discover what&apos;s next, and make every visit
+              feel easy. Because North Austin isn&apos;t just where we do business.
+              It&apos;s the community we&apos;re proud to welcome through our door.
+            </p>
+            <span>Come in once. Feel at home every time.</span>
+          </div>
+        </div>
+      </section>
+
       <section className="visit" id="visit" aria-labelledby="visit-title">
         <div className="visit__glow" aria-hidden="true">#</div>
         <div className="visit__content shell">
@@ -179,7 +201,10 @@ export default function Home() {
       </section>
 
       <footer className="footer shell">
-        <Wordmark />
+        <div className="footer__brand">
+          <img src={`${basePath}/man-logo-mark.svg`} alt="" />
+          <Wordmark />
+        </div>
         <p>North Austin&apos;s smoke shop.</p>
         <p>For adults 21+ only.</p>
       </footer>

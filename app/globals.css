@@ -286,6 +286,40 @@ a:focus-visible {
 .collection__copy span { display: block; max-width: 470px; margin-top: 14px; color: #c5c2c9; font-size: 14px; line-height: 1.5; }
 .photo-note { margin: 18px 0 0; color: #77737c; font-size: 11px; }
 
+.story { padding-block: 170px; }
+.story__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(320px, .65fr);
+  gap: clamp(60px, 9vw, 150px);
+  align-items: start;
+}
+.story h2 {
+  max-width: 900px;
+  margin: 0;
+  font-size: clamp(54px, 7vw, 108px);
+  font-weight: 560;
+  line-height: .92;
+  letter-spacing: -.07em;
+}
+.story__copy { padding-top: 12px; }
+.story__copy p {
+  margin: 0 0 26px;
+  color: var(--muted);
+  font-size: 19px;
+  line-height: 1.65;
+}
+.story__copy span {
+  display: block;
+  margin-top: 42px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
 .visit {
   min-height: 850px;
   position: relative;
@@ -330,6 +364,8 @@ a:focus-visible {
   color: #77737c;
   font-size: 12px;
 }
+.footer__brand { display: flex; align-items: center; gap: 14px; }
+.footer__brand > img { width: 44px; height: 44px; border-radius: 10px; object-fit: cover; }
 
 @keyframes breathe {
   0%, 100% { transform: translateY(-50%) scale(.98); filter: blur(1px); }
@@ -362,6 +398,8 @@ a:focus-visible {
   .intro { padding-block: 120px; }
   .intro > p:last-child { margin-left: 0; }
   .collection, .collection--wide { height: 560px; }
+  .story { padding-block: 120px; }
+  .story__grid { grid-template-columns: 1fr; gap: 48px; }
   .visit { min-height: 720px; }
 }
 
@@ -385,6 +423,9 @@ a:focus-visible {
   .collection-grid { grid-template-columns: 1fr; }
   .collection, .collection--wide { height: 520px; }
   .catalog { padding-bottom: 110px; }
+  .story { padding-block: 100px; }
+  .story h2 { font-size: 54px; }
+  .story__copy p { font-size: 17px; }
   .visit { min-height: 720px; }
   .visit__details { flex-direction: column; gap: 34px; margin-top: 48px; }
   .visit__glow { right: -20vw; opacity: .5; }
