@@ -6,7 +6,7 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 export const metadata: Metadata = {
   title: "# Smoke Shop | North Austin",
   description:
-    "North Austin smoke shop for vapes, cigars, glass, hookah, and everyday essentials at 10014 N Lamar Blvd.",
+    "North Austin smoke shop with vapes, premium cigars, glass, hookah, and honest in-store guidance at 10014 N Lamar Blvd.",
   icons: {
     icon: `${basePath}/man-logo-mark.svg`,
     apple: `${basePath}/man-logo-mark.png`,
