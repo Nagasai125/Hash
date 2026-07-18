@@ -87,6 +87,11 @@ export default function Home() {
           className="hero__photo"
         />
         <div className="hero__shade" />
+        <div className="hero__smoke" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </div>
         <div className="hero__hash" aria-hidden="true">#</div>
         <div className="hero__content shell">
           <p className="kicker"><span>Austin</span> • North Lamar</p>
