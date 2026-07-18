@@ -110,7 +110,7 @@ export default function Home() {
         <div className="hero__hash" aria-hidden="true">#</div>
         <div className="hero__content shell">
           <p className="kicker"><span>North Austin</span> • North Lamar • 21+</p>
-          <h1 id="hero-title">Good taste.<br /><span>No guesswork.</span></h1>
+          <h1 id="hero-title">Find your<br /><span>new ritual.</span></h1>
           <p className="hero__copy">
             A sharper smoke shop experience—real guidance, fresh arrivals,
             and the right gear for however you unwind.
