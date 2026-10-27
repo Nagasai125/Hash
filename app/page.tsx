@@ -1,5 +1,6 @@
 const collections = [
   {
+    slug: "vapes",
     name: "Vapes",
     eyebrow: "Devices & flavor",
     description:
@@ -9,6 +10,7 @@ const collections = [
     className: "collection collection--wide",
   },
   {
+    slug: "premium-cigars",
     name: "Premium cigars",
     eyebrow: "Humidor selection",
     description:
@@ -18,6 +20,7 @@ const collections = [
     className: "collection",
   },
   {
+    slug: "glass-hookah",
     name: "Glass & hookah",
     eyebrow: "Statement pieces",
     description:
@@ -27,6 +30,7 @@ const collections = [
     className: "collection",
   },
   {
+    slug: "daily-essentials",
     name: "Daily essentials",
     eyebrow: "Everything else",
     description:
@@ -86,7 +90,7 @@ export default function Home() {
         </a>
         <nav aria-label="Main navigation">
           <a href="#story">Our story</a>
-          <a href="#catalog">Catalog</a>
+          <a href={`${basePath}/catalog/`}>Catalog</a>
           <a href="#visit">Visit</a>
           <a className="nav__call" href="tel:+15125687868">
             Call us
@@ -116,7 +120,7 @@ export default function Home() {
             and the right gear for however you unwind.
           </p>
           <div className="hero__actions">
-            <a className="button button--primary" href="#catalog">
+            <a className="button button--primary" href={`${basePath}/catalog/`}>
               See the selection
             </a>
             <a
@@ -166,12 +170,17 @@ export default function Home() {
             <p className="section-label">The selection</p>
             <h2 id="catalog-title">Your orbit,<br />fully stocked.</h2>
           </div>
-          <a href="tel:+15125687868">Check today&apos;s stock ↗</a>
+          <a href={`${basePath}/catalog/`}>Explore the full catalog ↗</a>
         </div>
 
         <div className="collection-grid">
           {collections.map((item, index) => (
-            <article className={item.className} key={item.name}>
+            <a
+              className={item.className}
+              href={`${basePath}/catalog/#${item.slug}`}
+              key={item.name}
+              aria-label={`Explore ${item.name} in the catalog`}
+            >
               <img
                 src={`${basePath}${item.image}`}
                 alt={item.alt}
@@ -185,7 +194,7 @@ export default function Home() {
                 <h3>{item.name}</h3>
                 <span>{item.description}</span>
               </div>
-            </article>
+            </a>
           ))}
         </div>
         <p className="photo-note">
