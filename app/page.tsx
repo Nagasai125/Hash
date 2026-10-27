@@ -1,46 +1,3 @@
-const collections = [
-  {
-    slug: "vapes",
-    name: "Vapes",
-    eyebrow: "Devices & flavor",
-    description:
-      "Dependable disposables, refillable pod systems, coils, pods, and e-liquids—without the guesswork.",
-    image: "/images/vape.jpg",
-    alt: "A real black vape device surrounded by vapor",
-    className: "collection collection--wide",
-  },
-  {
-    slug: "premium-cigars",
-    name: "Premium cigars",
-    eyebrow: "Humidor selection",
-    description:
-      "Humidor-kept classics, everyday favorites, and special-occasion sticks ready when the moment is.",
-    image: "/images/cigars.jpg",
-    alt: "A real premium cigar resting on a wooden humidor",
-    className: "collection",
-  },
-  {
-    slug: "glass-hookah",
-    name: "Glass & hookah",
-    eyebrow: "Statement pieces",
-    description:
-      "Functional glass, standout hookahs, bowls, hoses, charcoal, and the details that complete your setup.",
-    image: "/images/hookah.jpg",
-    alt: "A real illuminated glass hookah in a lounge",
-    className: "collection",
-  },
-  {
-    slug: "daily-essentials",
-    name: "Daily essentials",
-    eyebrow: "Everything else",
-    description:
-      "Papers, wraps, trays, grinders, lighters, storage, and cleaning gear—the things you reach for most.",
-    image: "/images/glass.jpg",
-    alt: "A real hookah and accessories on a wooden table",
-    className: "collection collection--wide",
-  },
-];
-
 const promises = [
   {
     title: "A real answer.",
@@ -162,44 +119,6 @@ export default function Home() {
             </article>
           ))}
         </div>
-      </section>
-
-      <section className="catalog shell" id="catalog" aria-labelledby="catalog-title">
-        <div className="section-heading">
-          <div>
-            <p className="section-label">The selection</p>
-            <h2 id="catalog-title">Your orbit,<br />fully stocked.</h2>
-          </div>
-          <a href={`${basePath}/catalog/`}>Explore the full catalog ↗</a>
-        </div>
-
-        <div className="collection-grid">
-          {collections.map((item, index) => (
-            <a
-              className={item.className}
-              href={`${basePath}/catalog/#${item.slug}`}
-              key={item.name}
-              aria-label={`Explore ${item.name} in the catalog`}
-            >
-              <img
-                src={`${basePath}${item.image}`}
-                alt={item.alt}
-                loading="lazy"
-                className="collection__photo"
-              />
-              <div className="collection__veil" />
-              <div className="collection__number">0{index + 1}</div>
-              <div className="collection__copy">
-                <p>{item.eyebrow}</p>
-                <h3>{item.name}</h3>
-                <span>{item.description}</span>
-              </div>
-            </a>
-          ))}
-        </div>
-        <p className="photo-note">
-          Product photography is real and representative. Selection and brands vary in store.
-        </p>
       </section>
 
       <section className="story shell" id="story" aria-labelledby="story-title">

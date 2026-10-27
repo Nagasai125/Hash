@@ -39,10 +39,10 @@ export default function CatalogPage() {
         </div>
         <div className="catalog-hero__content shell">
           <p className="section-label">The selection • North Austin</p>
-          <h1 id="catalog-page-title">Find what fits.<br /><span>Skip the guesswork.</span></h1>
+          <h1 id="catalog-page-title">Every product.<br /><span>Easy to explore.</span></h1>
           <p>
-            Browse the shop by category, then call for today&apos;s exact brands,
-            flavors, sizes, and availability. We&apos;ll help narrow it down before you arrive.
+            Search the complete catalog, filter by category, and compare the details
+            in one place. Call to confirm today&apos;s availability before you arrive.
           </p>
           <div className="catalog-hero__actions">
             <a className="button button--primary" href="#browse">Browse categories</a>
@@ -52,7 +52,7 @@ export default function CatalogPage() {
         <a className="catalog-hero__back" href={`${basePath}/`}>← Back to home</a>
       </section>
 
-      <div id="browse"><CatalogExplorer /></div>
+      <CatalogExplorer />
 
       <section className="catalog-assist">
         <div className="catalog-assist__hash" aria-hidden="true">#</div>
