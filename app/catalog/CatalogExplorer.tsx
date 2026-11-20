@@ -53,6 +53,10 @@ export default function CatalogExplorer() {
       </div>
 
       {hasProducts && <div className="shop-options">
+        <label>Category <select value={activeCategory} onChange={(event) => setActiveCategory(event.target.value)}>
+          <option value="all">All categories</option>
+          {catalogCategories.map(({ id, name }) => <option key={id} value={id}>{name}</option>)}
+        </select></label>
         <label>Brand <select value={brand} onChange={(event) => setBrand(event.target.value)}>
           <option value="">All brands</option>
           {brands.map((name) => <option key={name}>{name}</option>)}
