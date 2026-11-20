@@ -4,10 +4,12 @@ import { useMemo, useState } from "react";
 import { catalogCategories, catalogIsPreview, catalogProducts } from "./catalog-data";
 import { changeQuantity } from "./cart";
 import { sortProducts, type ProductSort } from "./product-sort";
+import { matchesSearch, searchWords } from "./product-search";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const usd = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
 const brands = [...new Set(catalogProducts.flatMap(({ brand }) => brand ? [brand] : []))].sort();
+const categoryNames = new Map(catalogCategories.map(({ id, name }) => [id, name]));
 
 export default function CatalogExplorer() {
   const [activeCategory, setActiveCategory] = useState("all");
@@ -22,18 +24,17 @@ export default function CatalogExplorer() {
   const hasProducts = catalogProducts.length > 0;
 
   const visibleProducts = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase();
+    const terms = searchWords(query);
 
     return sortProducts(catalogProducts.filter((product) => {
       const matchesCategory = activeCategory === "all" || product.categoryId === activeCategory;
-      const searchableText = [
+      return matchesCategory && (!brand || product.brand === brand) && matchesSearch(terms, [
         product.name,
         product.brand,
+        categoryNames.get(product.categoryId),
         product.description,
         ...(product.tags ?? []),
-      ].filter(Boolean).join(" ").toLowerCase();
-
-      return matchesCategory && (!brand || product.brand === brand) && (!normalizedQuery || searchableText.includes(normalizedQuery));
+      ]);
     }), sort);
   }, [activeCategory, brand, query, sort]);
 
