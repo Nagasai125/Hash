@@ -19,7 +19,7 @@ export type CatalogProduct = {
   image?: string;
   priceCents?: number;
   imageSource?: string;
-  illustrativeImage?: boolean;
+  productSource?: string;
   availability?: "In stock" | "Low stock" | "Call to confirm";
   tags?: string[];
 };

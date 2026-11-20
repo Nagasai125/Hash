@@ -46,7 +46,6 @@
 .shop .catalog-product__copy strong { color: var(--green); font-size: 1.15rem; }
 .shop .catalog-product__visual { background: #151915 center / cover no-repeat; }
 .shop .catalog-product__visual .is-packshot { width: 80%; height: 80%; position: absolute; inset: 10%; object-fit: contain; }
-.shop .catalog-product__visual .is-illustration { position: absolute; inset: 0; object-fit: cover; }
 .shop-categories { grid-template-columns: repeat(5, minmax(0, 1fr)); }
 .shop-product-placeholder { width: 100%; height: 100%; display: grid; place-content: center; text-align: center; gap: 12px; background: radial-gradient(ellipse at center, #232c21, #101410 68%); }
 .shop-product-placeholder b { color: var(--green); font-size: clamp(4rem, 10vw, 7rem); font-weight: 900; line-height: .8; }

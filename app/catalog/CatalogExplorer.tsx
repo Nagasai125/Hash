@@ -111,11 +111,11 @@ export default function CatalogExplorer() {
               <article className="catalog-product" key={product.id}>
                 <div className="catalog-product__visual" style={{ backgroundImage: `url("${basePath}/images/catalog/studio.webp")` }}>
                   {product.image ? (
-                    <img className={product.illustrativeImage ? "is-illustration" : "is-packshot"} src={`${basePath}${product.image}`} alt={product.illustrativeImage ? "" : product.name} loading="lazy" />
+                    <img className="is-packshot" src={`${basePath}${product.image}`} alt={product.name} loading="lazy" />
                   ) : (
                     <div className="shop-product-placeholder" aria-hidden="true"><b>#</b><small>{category?.name}</small></div>
                   )}
-                  {product.illustrativeImage ? <em>Example image</em> : product.availability && <em>{product.availability}</em>}
+                  {product.availability && <em>{product.availability}</em>}
                 </div>
                 <div className="catalog-product__copy">
                   <p>{product.brand ?? category?.name}</p>
