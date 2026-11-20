@@ -30,7 +30,7 @@ export const catalogCategories: CatalogCategory[] = [
     name: "Vapes",
     eyebrow: "Devices & flavor",
     description:
-      "Dependable disposables, refillable pod systems, coils, pods, and e-liquids—with help finding the setup that fits.",
+      "Disposables, refillable pod systems, coils, pods, and e-liquids. We can help you find the right setup.",
     image: "/images/vape.jpg",
     alt: "Black vape device surrounded by natural vapor",
     includes: ["Disposables", "Pod systems", "Coils & pods", "E-liquids"],

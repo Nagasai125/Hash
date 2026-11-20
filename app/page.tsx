@@ -73,7 +73,7 @@ export default function Home() {
           <p className="kicker"><span>North Austin</span> • North Lamar • 21+</p>
           <h1 id="hero-title">Find your<br /><span>new ritual.</span></h1>
           <p className="hero__copy">
-            A sharper smoke shop experience—real guidance, fresh arrivals,
+            A sharper smoke shop experience with real guidance, fresh arrivals,
             and the right gear for however you unwind.
           </p>
           <div className="hero__actions">
@@ -146,7 +146,7 @@ export default function Home() {
         <div className="visit__content shell">
           <p className="section-label">Your next stop</p>
           <h2 id="visit-title">Come by.<br />Find your thing.</h2>
-          <p className="visit__lede">New favorite, reliable standby, or something you can&apos;t name yet—we&apos;ll help you find it.</p>
+          <p className="visit__lede">We&apos;ll help you find a new favorite, a reliable standby, or something you can&apos;t name yet.</p>
           <div className="visit__details">
             <a
               href="https://www.google.com/maps/dir/?api=1&destination=10014+N+Lamar+Blvd+Austin+TX+78753"
