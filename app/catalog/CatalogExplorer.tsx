@@ -2,12 +2,17 @@
 
 import { useMemo, useState } from "react";
 import { catalogCategories, catalogProducts } from "./catalog-data";
+import { changeQuantity } from "./cart";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export default function CatalogExplorer() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [query, setQuery] = useState("");
+  // shortcut: page-session cart only, add persistence when checkout is defined.
+  const [cart, setCart] = useState<Record<string, number>>({});
+  const itemCount = Object.values(cart).reduce((total, quantity) => total + quantity, 0);
+  const updateCart = (id: string, delta: number) => setCart((current) => changeQuantity(current, id, delta));
   const selectedCategory = catalogCategories.find((category) => category.id === activeCategory);
   const hasProducts = catalogProducts.length > 0;
 
@@ -32,7 +37,7 @@ export default function CatalogExplorer() {
       <div className="shop-intro">
         <p className="section-label">The North Lamar storefront</p>
         <h1 id="all-products-title">Shop the <span>catalog.</span></h1>
-        <p>Explore the selection online. Find it in-store in North Austin.</p>
+        <p>{hasProducts ? "Browse products and build your cart. Online checkout isn’t open yet." : "Explore our departments while we prepare the online product listings."}</p>
       </div>
 
       <div className="shop-categories" role="group" aria-label="Browse by category">
@@ -89,6 +94,7 @@ export default function CatalogExplorer() {
                     <small>{category?.name}</small>
                     <strong>{product.price ?? "Call for price"}</strong>
                   </div>
+                  <button className="button button--primary shop-add" type="button" onClick={() => updateCart(product.id, 1)} aria-label={`Add ${product.name} to cart`}>Add to cart</button>
                 </div>
               </article>
             );
@@ -112,6 +118,25 @@ export default function CatalogExplorer() {
           <button type="button" onClick={() => { setQuery(""); setActiveCategory("all"); }}>Clear filters</button>
         </div>
       )}
+      <section className="shop-cart" aria-labelledby="cart-title">
+        <h2 id="cart-title" aria-live="polite">Your cart ({itemCount})</h2>
+        {itemCount === 0 ? <p>{hasProducts ? "Add a product to get started." : "You’ll be able to add items when product listings are available."}</p> : (
+          <ul>
+            {catalogProducts.filter(({ id }) => cart[id] > 0).map(({ id, name, price }) => (
+              <li key={id}>
+                <span><strong>{name}</strong><small>{price ? `${price} each` : "Call for price"}</small></span>
+                <div className="shop-quantity">
+                  <button type="button" aria-label={`Decrease quantity of ${name}`} onClick={() => updateCart(id, -1)}>−</button>
+                  <span>{cart[id]}</span>
+                  <button type="button" aria-label={`Increase quantity of ${name}`} onClick={() => updateCart(id, 1)}>+</button>
+                  <button type="button" aria-label={`Remove ${name} from cart`} onClick={() => updateCart(id, -cart[id])}>Remove</button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+        <p>Checkout is not available yet. Adding items does not place an order.</p>
+      </section>
       <aside className="shop-visit">
         <div><h2>Find it in-store</h2><p>Online product listings are not live inventory. Call to check availability.</p></div>
         <a className="button button--primary" href="tel:+15125687868">Call the shop</a>

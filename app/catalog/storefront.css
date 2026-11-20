@@ -32,6 +32,14 @@
 .shop-visit { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 32px; background: #171b17; border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
 .shop-visit > div { flex: 1 1 300px; }
 .shop-visit p { color: var(--muted); margin: 4px 0 0; }
+.shop-add { margin-top: 14px; width: 100%; cursor: pointer; }
+.shop-cart { margin-top: 30px; border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
+.shop-cart h2 { font-size: 1.5rem; font-weight: 700; }
+.shop-cart p { margin-top: 8px; color: var(--muted); }
+.shop-cart li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding-block: 12px; border-bottom: 1px solid var(--line); }
+.shop-cart small { display: block; color: var(--muted); }
+.shop-quantity { display: flex; align-items: center; gap: 8px; }
+.shop-quantity button { min-width: 44px; min-height: 44px; padding-inline: 8px; border: 1px solid var(--line); border-radius: 8px; cursor: pointer; }
 @media (max-width: 760px) {
   .shop-categories, .shop-departments { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .shop-categories button { min-height: 128px; padding: 11px; }
