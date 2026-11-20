@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import CartDrawer from "./CartDrawer";
 import { catalogCategories, catalogIsPreview, catalogProducts } from "./catalog-data";
 import { changeQuantity } from "./cart";
 import { sortProducts, type ProductSort } from "./product-sort";
@@ -18,6 +19,7 @@ export default function CatalogExplorer() {
   const [sort, setSort] = useState<ProductSort>("featured");
   // shortcut: page-session cart only, add persistence when checkout is defined.
   const [cart, setCart] = useState<Record<string, number>>({});
+  const drawerRef = useRef<HTMLDialogElement>(null);
   const itemCount = Object.values(cart).reduce((total, quantity) => total + quantity, 0);
   const updateCart = (id: string, delta: number) => setCart((current) => changeQuantity(current, id, delta));
   const selectedCategory = catalogCategories.find((category) => category.id === activeCategory);
@@ -69,7 +71,10 @@ export default function CatalogExplorer() {
           <option value="name">Name: A–Z</option>
         </select></label>
         {(query || brand || selectedCategory || sort !== "featured") && <button type="button" onClick={clearFilters}>Reset</button>}
-        <a href="#cart-title">View cart ({itemCount})</a>
+        <button className="cart-trigger" type="button" aria-haspopup="dialog" onClick={() => drawerRef.current?.showModal()}>
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M5 8h14l1 13H4L5 8Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
+          Cart <span aria-live="polite">{itemCount}</span>
+        </button>
       </div>}
 
       <div className="shop-categories" role="group" aria-label="Browse by category">
@@ -126,7 +131,7 @@ export default function CatalogExplorer() {
                     <small>{category?.name}</small>
                     <strong>{product.priceCents == null ? "Call for price" : usd.format(product.priceCents / 100)}</strong>
                   </div>
-                  <button className="button button--primary shop-add" type="button" onClick={() => updateCart(product.id, 1)} aria-label={`Add ${product.name} to cart`}>Add to cart</button>
+                  <button className="button button--primary shop-add" type="button" onClick={() => { updateCart(product.id, 1); drawerRef.current?.showModal(); }} aria-label={`Add ${product.name} to cart`}>Add to cart</button>
                 </div>
               </article>
             );
@@ -150,25 +155,7 @@ export default function CatalogExplorer() {
           <button type="button" onClick={clearFilters}>Clear filters</button>
         </div>
       )}
-      <section className="shop-cart" aria-labelledby="cart-title">
-        <h2 id="cart-title" aria-live="polite">Your cart ({itemCount})</h2>
-        {itemCount === 0 ? <p>Your cart is empty.</p> : (
-          <ul>
-            {catalogProducts.filter(({ id }) => cart[id] > 0).map(({ id, name, priceCents }) => (
-              <li key={id}>
-                <span><strong>{name}</strong><small>{priceCents == null ? "Call for price" : `${usd.format(priceCents / 100)} each`}</small></span>
-                <div className="shop-quantity">
-                  <button type="button" aria-label={`Decrease quantity of ${name}`} onClick={() => updateCart(id, -1)}>−</button>
-                  <span>{cart[id]}</span>
-                  <button type="button" aria-label={`Increase quantity of ${name}`} onClick={() => updateCart(id, 1)}>+</button>
-                  <button type="button" aria-label={`Remove ${name} from cart`} onClick={() => updateCart(id, -cart[id])}>Remove</button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
-        <p>You can add items, but you can’t place an order yet.</p>
-      </section>
+      <CartDrawer drawerRef={drawerRef} cart={cart} itemCount={itemCount} updateCart={updateCart} />
       {!catalogIsPreview && <aside className="shop-visit">
         <div><h2>Find it in-store</h2><p>Online product listings are not live inventory. Call to check availability.</p></div>
         <a className="button button--primary" href="tel:+15125687868">Call the shop</a>
