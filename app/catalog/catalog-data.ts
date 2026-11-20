@@ -18,7 +18,6 @@ export type CatalogProduct = {
   description?: string;
   image?: string;
   priceCents?: number;
-  replacementPod?: boolean;
   imageSource?: string;
   productSource?: string;
   availability?: "In stock" | "Low stock" | "Call to confirm";
@@ -31,10 +30,19 @@ export const catalogCategories: CatalogCategory[] = [
     name: "Vapes",
     eyebrow: "Devices & flavor",
     description:
-      "Disposables, refillable pod systems, coils, pods, and e-liquids. We can help you find the right setup.",
+      "Disposable vapes and device kits.",
     image: "/images/vape.jpg",
     alt: "Black vape device surrounded by natural vapor",
-    includes: ["Disposables", "Pod systems", "Coils & pods", "E-liquids"],
+    includes: ["Disposables", "Device kits"],
+  },
+  {
+    id: "refills",
+    name: "Refills",
+    eyebrow: "Replacement pods",
+    description: "Pods for compatible vape kits. Batteries are sold separately.",
+    image: "/images/catalog/foger-switch-pro-30k-pod-gummy-bear.webp",
+    alt: "Foger Switch Pro replacement pod",
+    includes: ["Replacement pods"],
   },
   {
     id: "premium-cigars",

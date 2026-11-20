@@ -15,7 +15,6 @@ export default function CatalogExplorer() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [query, setQuery] = useState("");
   const [brand, setBrand] = useState("");
-  const [refillsOnly, setRefillsOnly] = useState(false);
   const [sort, setSort] = useState<ProductSort>("featured");
   // shortcut: page-session cart only, add persistence when checkout is defined.
   const [cart, setCart] = useState<Record<string, number>>({});
@@ -29,7 +28,7 @@ export default function CatalogExplorer() {
 
     return sortProducts(catalogProducts.filter((product) => {
       const matchesCategory = activeCategory === "all" || product.categoryId === activeCategory;
-      return matchesCategory && (!refillsOnly || product.replacementPod) && (!brand || product.brand === brand) && matchesSearch(terms, [
+      return matchesCategory && (!brand || product.brand === brand) && matchesSearch(terms, [
         product.name,
         product.brand,
         categoryNames.get(product.categoryId),
@@ -37,17 +36,12 @@ export default function CatalogExplorer() {
         ...(product.tags ?? []),
       ]);
     }), sort);
-  }, [activeCategory, brand, query, refillsOnly, sort]);
-
-  function selectCategory(id: string) {
-    setActiveCategory(id);
-    if (id !== "vapes") setRefillsOnly(false);
-  }
+  }, [activeCategory, brand, query, sort]);
 
   function clearFilters() {
     setQuery("");
     setBrand("");
-    selectCategory("all");
+    setActiveCategory("all");
     setSort("featured");
   }
 
@@ -60,14 +54,10 @@ export default function CatalogExplorer() {
       </div>
 
       {hasProducts && <div className="shop-options">
-        <label>Category <select value={activeCategory} onChange={(event) => selectCategory(event.target.value)}>
+        <label>Category <select value={activeCategory} onChange={(event) => setActiveCategory(event.target.value)}>
           <option value="all">All categories</option>
           {catalogCategories.map(({ id, name }) => <option key={id} value={id}>{name}</option>)}
         </select></label>
-        {activeCategory === "vapes" && <label>Vape type <select value={refillsOnly ? "refills" : "all"} onChange={(event) => setRefillsOnly(event.target.value === "refills")}>
-          <option value="all">All vape types</option>
-          <option value="refills">Replacement pods only</option>
-        </select></label>}
         <label>Brand <select value={brand} onChange={(event) => setBrand(event.target.value)}>
           <option value="">All brands</option>
           {brands.map((name) => <option key={name}>{name}</option>)}
@@ -85,7 +75,7 @@ export default function CatalogExplorer() {
       <div className="shop-categories" role="group" aria-label="Browse by category">
         {catalogCategories.map((category) => (
           <button key={category.id} type="button" aria-pressed={activeCategory === category.id}
-            onClick={() => selectCategory(activeCategory === category.id ? "all" : category.id)}>
+            onClick={() => setActiveCategory(activeCategory === category.id ? "all" : category.id)}>
             {category.image && <img src={`${basePath}${category.image}`} alt="" />}
             <span>{category.eyebrow}<strong>{category.name}</strong></span>
           </button>
@@ -106,7 +96,7 @@ export default function CatalogExplorer() {
           />
         </label>
         }
-        {selectedCategory && <button type="button" onClick={() => selectCategory("all")}>View all</button>}
+        {selectedCategory && <button type="button" onClick={() => setActiveCategory("all")}>View all</button>}
       </div>
 
       {hasProducts && <div className="sr-only" aria-live="polite">
