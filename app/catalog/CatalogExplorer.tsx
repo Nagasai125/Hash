@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { catalogCategories, catalogProducts } from "./catalog-data";
+import { catalogCategories, catalogIsPreview, catalogProducts } from "./catalog-data";
 import { changeQuantity } from "./cart";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -37,14 +37,14 @@ export default function CatalogExplorer() {
       <div className="shop-intro">
         <p className="section-label">The North Lamar storefront</p>
         <h1 id="all-products-title">Shop the <span>catalog.</span></h1>
-        <p>{hasProducts ? "Browse products and build your cart. Online checkout isn’t open yet." : "Explore our departments while we prepare the online product listings."}</p>
+        <p>{catalogIsPreview ? "Preview assortment. These sample listings do not reflect # Smoke Shop prices or stock." : hasProducts ? "Browse products and build your cart. Online checkout isn’t open yet." : "Explore our departments while we prepare the online product listings."}</p>
       </div>
 
       <div className="shop-categories" role="group" aria-label="Browse by category">
         {catalogCategories.map((category) => (
           <button key={category.id} type="button" aria-pressed={activeCategory === category.id}
             onClick={() => setActiveCategory(activeCategory === category.id ? "all" : category.id)}>
-            <img src={`${basePath}${category.image}`} alt="" />
+            {category.image && <img src={`${basePath}${category.image}`} alt="" />}
             <span>{category.eyebrow}<strong>{category.name}</strong></span>
           </button>
         ))}
@@ -82,7 +82,7 @@ export default function CatalogExplorer() {
                   {product.image ? (
                     <img src={`${basePath}${product.image}`} alt={product.name} loading="lazy" />
                   ) : (
-                    <span aria-hidden="true">#</span>
+                    <div className="shop-product-placeholder" aria-hidden="true"><b>#</b><small>{category?.name}</small></div>
                   )}
                   {product.availability && <em>{product.availability}</em>}
                 </div>
@@ -92,7 +92,7 @@ export default function CatalogExplorer() {
                   {product.description && <span>{product.description}</span>}
                   <div>
                     <small>{category?.name}</small>
-                    <strong>{product.price ?? "Call for price"}</strong>
+                    <strong>{product.price ?? (catalogIsPreview ? "Preview item" : "Call for price")}</strong>
                   </div>
                   <button className="button button--primary shop-add" type="button" onClick={() => updateCart(product.id, 1)} aria-label={`Add ${product.name} to cart`}>Add to cart</button>
                 </div>
@@ -124,7 +124,7 @@ export default function CatalogExplorer() {
           <ul>
             {catalogProducts.filter(({ id }) => cart[id] > 0).map(({ id, name, price }) => (
               <li key={id}>
-                <span><strong>{name}</strong><small>{price ? `${price} each` : "Call for price"}</small></span>
+                <span><strong>{name}</strong><small>{price ? `${price} each` : catalogIsPreview ? "Preview item" : "Call for price"}</small></span>
                 <div className="shop-quantity">
                   <button type="button" aria-label={`Decrease quantity of ${name}`} onClick={() => updateCart(id, -1)}>−</button>
                   <span>{cart[id]}</span>
@@ -137,11 +137,11 @@ export default function CatalogExplorer() {
         )}
         <p>Checkout is not available yet. Adding items does not place an order.</p>
       </section>
-      <aside className="shop-visit">
+      {!catalogIsPreview && <aside className="shop-visit">
         <div><h2>Find it in-store</h2><p>Online product listings are not live inventory. Call to check availability.</p></div>
         <a className="button button--primary" href="tel:+15125687868">Call the shop</a>
         <a className="button button--glass" href={`${basePath}/#visit`}>Plan your visit</a>
-      </aside>
+      </aside>}
     </section>
   );
 }

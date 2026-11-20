@@ -1,3 +1,5 @@
+import products from "./products.json";
+
 export type CatalogCategory = {
   id: string;
   name: string;
@@ -61,8 +63,17 @@ export const catalogCategories: CatalogCategory[] = [
     alt: "Hookah and accessories on a wooden table",
     includes: ["Papers & wraps", "Trays & grinders", "Lighters", "Storage & cleaning"],
   },
+  {
+    id: "botanicals",
+    name: "Botanicals & edibles",
+    eyebrow: "Preview assortment",
+    description: "Reference listings for botanicals and edibles.",
+    image: "",
+    alt: "",
+    includes: [],
+  },
 ];
 
-// Add supplied inventory here. The catalog UI automatically groups products by
-// category and supports brand, price, availability, image, and tag metadata.
-export const catalogProducts: CatalogProduct[] = [];
+// shortcut: local snapshot, replace with verified records from the Sheets export.
+export const catalogIsPreview = true;
+export const catalogProducts: CatalogProduct[] = products;
