@@ -18,6 +18,7 @@ export type CatalogProduct = {
   description?: string;
   image?: string;
   priceCents?: number;
+  replacementPod?: boolean;
   imageSource?: string;
   productSource?: string;
   availability?: "In stock" | "Low stock" | "Call to confirm";
