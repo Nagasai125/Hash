@@ -17,7 +17,9 @@ export type CatalogProduct = {
   brand?: string;
   description?: string;
   image?: string;
-  price?: string;
+  priceCents?: number;
+  imageSource?: string;
+  illustrativeImage?: boolean;
   availability?: "In stock" | "Low stock" | "Call to confirm";
   tags?: string[];
 };

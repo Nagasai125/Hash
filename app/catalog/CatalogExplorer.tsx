@@ -3,12 +3,17 @@
 import { useMemo, useState } from "react";
 import { catalogCategories, catalogIsPreview, catalogProducts } from "./catalog-data";
 import { changeQuantity } from "./cart";
+import { sortProducts, type ProductSort } from "./product-sort";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const usd = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" });
+const brands = [...new Set(catalogProducts.flatMap(({ brand }) => brand ? [brand] : []))].sort();
 
 export default function CatalogExplorer() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [query, setQuery] = useState("");
+  const [brand, setBrand] = useState("");
+  const [sort, setSort] = useState<ProductSort>("featured");
   // shortcut: page-session cart only, add persistence when checkout is defined.
   const [cart, setCart] = useState<Record<string, number>>({});
   const itemCount = Object.values(cart).reduce((total, quantity) => total + quantity, 0);
@@ -19,7 +24,7 @@ export default function CatalogExplorer() {
   const visibleProducts = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
 
-    return catalogProducts.filter((product) => {
+    return sortProducts(catalogProducts.filter((product) => {
       const matchesCategory = activeCategory === "all" || product.categoryId === activeCategory;
       const searchableText = [
         product.name,
@@ -28,17 +33,39 @@ export default function CatalogExplorer() {
         ...(product.tags ?? []),
       ].filter(Boolean).join(" ").toLowerCase();
 
-      return matchesCategory && (!normalizedQuery || searchableText.includes(normalizedQuery));
-    });
-  }, [activeCategory, query]);
+      return matchesCategory && (!brand || product.brand === brand) && (!normalizedQuery || searchableText.includes(normalizedQuery));
+    }), sort);
+  }, [activeCategory, brand, query, sort]);
+
+  function clearFilters() {
+    setQuery("");
+    setBrand("");
+    setActiveCategory("all");
+    setSort("featured");
+  }
 
   return (
     <section className="shop shell" id="browse" aria-labelledby="all-products-title">
       <div className="shop-intro">
         <p className="section-label">The North Lamar storefront</p>
         <h1 id="all-products-title">Shop the <span>catalog.</span></h1>
-        <p>{catalogIsPreview ? "Preview assortment. These sample listings do not reflect # Smoke Shop prices or stock." : hasProducts ? "Browse products and build your cart. Online checkout isn’t open yet." : "Explore our departments while we prepare the online product listings."}</p>
+        <p>{catalogIsPreview ? "Preview assortment with sample prices. Products, prices, and stock are not confirmed for # Smoke Shop." : hasProducts ? "Browse products and build your cart. Online checkout isn’t open yet." : "Explore our departments while we prepare the online product listings."}</p>
       </div>
+
+      {hasProducts && <div className="shop-options">
+        <label>Brand <select value={brand} onChange={(event) => setBrand(event.target.value)}>
+          <option value="">All brands</option>
+          {brands.map((name) => <option key={name}>{name}</option>)}
+        </select></label>
+        <label>Sort by <select value={sort} onChange={(event) => setSort(event.target.value as ProductSort)}>
+          <option value="featured">Featured</option>
+          <option value="price-asc">Price: low to high</option>
+          <option value="price-desc">Price: high to low</option>
+          <option value="name">Name: A–Z</option>
+        </select></label>
+        {(query || brand || selectedCategory || sort !== "featured") && <button type="button" onClick={clearFilters}>Reset</button>}
+        <a href="#cart-title">View cart ({itemCount})</a>
+      </div>}
 
       <div className="shop-categories" role="group" aria-label="Browse by category">
         {catalogCategories.map((category) => (
@@ -78,13 +105,13 @@ export default function CatalogExplorer() {
 
             return (
               <article className="catalog-product" key={product.id}>
-                <div className="catalog-product__visual">
+                <div className="catalog-product__visual" style={{ backgroundImage: `url("${basePath}/images/catalog/studio.webp")` }}>
                   {product.image ? (
-                    <img src={`${basePath}${product.image}`} alt={product.name} loading="lazy" />
+                    <img className={product.illustrativeImage ? "is-illustration" : "is-packshot"} src={`${basePath}${product.image}`} alt={product.illustrativeImage ? "" : product.name} loading="lazy" />
                   ) : (
                     <div className="shop-product-placeholder" aria-hidden="true"><b>#</b><small>{category?.name}</small></div>
                   )}
-                  {product.availability && <em>{product.availability}</em>}
+                  {product.illustrativeImage ? <em>Category illustration</em> : product.availability && <em>{product.availability}</em>}
                 </div>
                 <div className="catalog-product__copy">
                   <p>{product.brand ?? category?.name}</p>
@@ -92,7 +119,7 @@ export default function CatalogExplorer() {
                   {product.description && <span>{product.description}</span>}
                   <div>
                     <small>{category?.name}</small>
-                    <strong>{product.price ?? (catalogIsPreview ? "Preview item" : "Call for price")}</strong>
+                    <strong>{product.priceCents == null ? "Call for price" : usd.format(product.priceCents / 100)}</strong>
                   </div>
                   <button className="button button--primary shop-add" type="button" onClick={() => updateCart(product.id, 1)} aria-label={`Add ${product.name} to cart`}>Add to cart</button>
                 </div>
@@ -115,16 +142,16 @@ export default function CatalogExplorer() {
             <p className="section-label">No matches</p>
             <h3>Try another search or category.</h3>
           </div>
-          <button type="button" onClick={() => { setQuery(""); setActiveCategory("all"); }}>Clear filters</button>
+          <button type="button" onClick={clearFilters}>Clear filters</button>
         </div>
       )}
       <section className="shop-cart" aria-labelledby="cart-title">
         <h2 id="cart-title" aria-live="polite">Your cart ({itemCount})</h2>
         {itemCount === 0 ? <p>{hasProducts ? "Add a product to get started." : "You’ll be able to add items when product listings are available."}</p> : (
           <ul>
-            {catalogProducts.filter(({ id }) => cart[id] > 0).map(({ id, name, price }) => (
+            {catalogProducts.filter(({ id }) => cart[id] > 0).map(({ id, name, priceCents }) => (
               <li key={id}>
-                <span><strong>{name}</strong><small>{price ? `${price} each` : catalogIsPreview ? "Preview item" : "Call for price"}</small></span>
+                <span><strong>{name}</strong><small>{priceCents == null ? "Call for price" : `${usd.format(priceCents / 100)} each`}</small></span>
                 <div className="shop-quantity">
                   <button type="button" aria-label={`Decrease quantity of ${name}`} onClick={() => updateCart(id, -1)}>−</button>
                   <span>{cart[id]}</span>
