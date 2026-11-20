@@ -17,6 +17,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <head>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400..700&amp;display=swap" />
         <link rel="preload" href={`${basePath}/man-logo-mark.svg`} as="image" type="image/svg+xml" />
       </head>
       <body>{children}</body>

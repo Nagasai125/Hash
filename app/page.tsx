@@ -1,42 +1,3 @@
-const collections = [
-  {
-    name: "Vapes",
-    eyebrow: "Devices & flavor",
-    description:
-      "Dependable disposables, refillable pod systems, coils, pods, and e-liquids—without the guesswork.",
-    image: "/images/vape.jpg",
-    alt: "A real black vape device surrounded by vapor",
-    className: "collection collection--wide",
-  },
-  {
-    name: "Premium cigars",
-    eyebrow: "Humidor selection",
-    description:
-      "Humidor-kept classics, everyday favorites, and special-occasion sticks ready when the moment is.",
-    image: "/images/cigars.jpg",
-    alt: "A real premium cigar resting on a wooden humidor",
-    className: "collection",
-  },
-  {
-    name: "Glass & hookah",
-    eyebrow: "Statement pieces",
-    description:
-      "Functional glass, standout hookahs, bowls, hoses, charcoal, and the details that complete your setup.",
-    image: "/images/hookah.jpg",
-    alt: "A real illuminated glass hookah in a lounge",
-    className: "collection",
-  },
-  {
-    name: "Daily essentials",
-    eyebrow: "Everything else",
-    description:
-      "Papers, wraps, trays, grinders, lighters, storage, and cleaning gear—the things you reach for most.",
-    image: "/images/glass.jpg",
-    alt: "A real hookah and accessories on a wooden table",
-    className: "collection collection--wide",
-  },
-];
-
 const promises = [
   {
     title: "A real answer.",
@@ -86,7 +47,7 @@ export default function Home() {
         </a>
         <nav aria-label="Main navigation">
           <a href="#story">Our story</a>
-          <a href="#catalog">Catalog</a>
+          <a href={`${basePath}/catalog/`}>Catalog</a>
           <a href="#visit">Visit</a>
           <a className="nav__call" href="tel:+15125687868">
             Call us
@@ -112,11 +73,11 @@ export default function Home() {
           <p className="kicker"><span>North Austin</span> • North Lamar • 21+</p>
           <h1 id="hero-title">Find your<br /><span>new ritual.</span></h1>
           <p className="hero__copy">
-            A sharper smoke shop experience—real guidance, fresh arrivals,
+            A sharper smoke shop experience with real guidance, fresh arrivals,
             and the right gear for however you unwind.
           </p>
           <div className="hero__actions">
-            <a className="button button--primary" href="#catalog">
+            <a className="button button--primary" href={`${basePath}/catalog/`}>
               See the selection
             </a>
             <a
@@ -160,39 +121,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="catalog shell" id="catalog" aria-labelledby="catalog-title">
-        <div className="section-heading">
-          <div>
-            <p className="section-label">The selection</p>
-            <h2 id="catalog-title">Your orbit,<br />fully stocked.</h2>
-          </div>
-          <a href="tel:+15125687868">Check today&apos;s stock ↗</a>
-        </div>
-
-        <div className="collection-grid">
-          {collections.map((item, index) => (
-            <article className={item.className} key={item.name}>
-              <img
-                src={`${basePath}${item.image}`}
-                alt={item.alt}
-                loading="lazy"
-                className="collection__photo"
-              />
-              <div className="collection__veil" />
-              <div className="collection__number">0{index + 1}</div>
-              <div className="collection__copy">
-                <p>{item.eyebrow}</p>
-                <h3>{item.name}</h3>
-                <span>{item.description}</span>
-              </div>
-            </article>
-          ))}
-        </div>
-        <p className="photo-note">
-          Product photography is real and representative. Selection and brands vary in store.
-        </p>
-      </section>
-
       <section className="story shell" id="story" aria-labelledby="story-title">
         <p className="section-label">Our story</p>
         <div className="story__grid">
@@ -218,7 +146,7 @@ export default function Home() {
         <div className="visit__content shell">
           <p className="section-label">Your next stop</p>
           <h2 id="visit-title">Come by.<br />Find your thing.</h2>
-          <p className="visit__lede">New favorite, reliable standby, or something you can&apos;t name yet—we&apos;ll help you find it.</p>
+          <p className="visit__lede">We&apos;ll help you find a new favorite, a reliable standby, or something you can&apos;t name yet.</p>
           <div className="visit__details">
             <a
               href="https://www.google.com/maps/dir/?api=1&destination=10014+N+Lamar+Blvd+Austin+TX+78753"

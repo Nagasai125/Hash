@@ -1,98 +1,52 @@
-# vinext-starter
+# # Smoke Shop storefront
 
-A clean full-stack starter running on
-[vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
-Drizzle support.
+Storefront and preview catalog for # Smoke Shop in North Austin. Products, photos,
+and prices are sample listings. The cart stays in the current page session;
+checkout, payments, and delivery are disabled.
 
-## Prerequisites
+## Project layout
 
-- Node.js `>=22.13.0`
+| Path | Responsibility |
+| --- | --- |
+| `app/` | Frontend routes, components, and styles. `app/catalog/` contains the catalog, filters, cart, and product JSON. |
+| `backend/` | Cloudflare Worker entry point, server-side auth helpers, D1 schema, and Drizzle migrations. No live database is configured. |
+| `public/` | Static brand assets and product photos. Use `public/images/catalog/` for catalog images. |
+| `build/` | Sites packaging plugin. |
+| `tests/` | Search, sort, and cart unit tests, plus Worker render and image reference checks. |
+| `examples/d1/` | Optional notes example. Not mounted in the storefront. |
 
-## Quick Start
+## Run locally
 
-```bash
-npm install
+Use Node.js 22.13 or later. Check out the project in a folder without `#` in
+its path; Vinext can misread it when loading its config.
+
+```sh
+npm ci
 npm run dev
-npm run build
+npm test
 ```
 
-This starter does not use `wrangler.jsonc`.
+Open `http://localhost:3000/catalog`. `npm test` builds the Worker and runs the
+storefront checks. Run `npm run db:generate` after changing
+`backend/db/schema.ts`, if D1 has been enabled.
 
-## Included Shape
+## Update the catalog
 
-- edit site code under `app/`
-- `.openai/hosting.json` declares optional Sites D1 and R2 bindings
-- `vite.config.ts` simulates declared bindings for local development
-- `db/schema.ts` starts intentionally empty
-- `examples/d1/` contains an optional D1 example surface
-- `drizzle.config.ts` supports local migration generation when needed
+Edit `app/catalog/products.json`. Keep IDs unique, use integer `priceCents`,
+and match each `categoryId` to `app/catalog/catalog-data.ts`. Paths starting
+with `/images/catalog/` resolve under `public/`. Keep source links for preview
+photos and verify inventory, pricing, and image rights before a public launch.
 
-## Workspace Auth Headers
+## Deployment
 
-OpenAI workspace sites can read the current user's email from
-`oai-authenticated-user-email`.
+GitHub Pages uses the static build in `.github/workflows/pages.yml` and deploys
+from `main`. To reproduce the static build locally:
 
-SIWC-authenticated workspace sites may also receive
-`oai-authenticated-user-full-name` when the user's SIWC profile has a non-empty
-`name` claim. The full-name value is percent-encoded UTF-8 and is accompanied by
-`oai-authenticated-user-full-name-encoding: percent-encoded-utf-8`.
-
-Treat the full name as optional and fall back to email when it is absent:
-
-```tsx
-import { headers } from "next/headers";
-
-export default async function Home() {
-  const requestHeaders = await headers();
-  const email = requestHeaders.get("oai-authenticated-user-email");
-  const encodedFullName = requestHeaders.get("oai-authenticated-user-full-name");
-  const fullName =
-    encodedFullName &&
-    requestHeaders.get("oai-authenticated-user-full-name-encoding") ===
-      "percent-encoded-utf-8"
-      ? decodeURIComponent(encodedFullName)
-      : null;
-
-  const displayName = fullName ?? email;
-  // ...
-}
+```sh
+GITHUB_PAGES=true NEXT_PUBLIC_BASE_PATH=/Hash npm run build:pages
 ```
 
-## Optional Dispatch-Owned ChatGPT Sign-In
-
-Import the ready-to-use helpers from `app/chatgpt-auth.ts` when the site needs
-optional or required ChatGPT sign-in:
-
-- Use `getChatGPTUser()` for optional signed-in UI.
-- Use `requireChatGPTUser(returnTo)` for server-rendered pages that should send
-  anonymous visitors through Sign in with ChatGPT.
-- Use `chatGPTSignInPath(returnTo)` and `chatGPTSignOutPath(returnTo)` for
-  browser links or actions.
-- Pass a same-origin relative `returnTo` path for the destination after sign-in
-  or sign-out. The helper validates and safely encodes it.
-- Mark protected pages with `export const dynamic = "force-dynamic"` because
-  they depend on per-request identity headers.
-
-Dispatch owns `/signin-with-chatgpt`, `/signout-with-chatgpt`, `/callback`, the
-OAuth cookies, and identity header injection. Do not implement app routes for
-those reserved paths. Routes that do not import and call the helper remain
-anonymous-compatible.
-
-SIWC establishes identity only; it does not prove workspace membership. Use the
-Sites hosting platform's access policy controls for workspace-wide restrictions,
-or enforce explicit server-side membership or allowlist checks.
-
-Use SIWC for account pages, user-specific dashboards, saved records, and write
-actions tied to the current ChatGPT user. Leave public content anonymous.
-
-## Useful Commands
-
-- `npm run dev`: start local development
-- `npm run build`: verify the vinext build output
-- `npm test`: build the starter and verify its rendered loading skeleton
-- `npm run db:generate`: generate Drizzle migrations after schema changes
-
-## Learn More
-
-- [vinext Documentation](https://github.com/cloudflare/vinext)
-- [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)
+The private Sites deployment uses the Worker build (`npm run build`) and the
+existing `.openai/hosting.json`. Keep secrets out of Git. Sign-in helpers in
+`backend/chatgpt-auth.ts` depend on Sites identity headers and are not used by
+the static storefront.
