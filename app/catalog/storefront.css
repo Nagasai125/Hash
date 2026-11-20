@@ -1,0 +1,38 @@
+.storefront { background: #0b0d0c; }
+.storefront .catalog-nav { position: static; transform: none; height: 70px; }
+.storefront .footer { border-top: 1px solid var(--line); }
+.shop { max-width: 1260px; padding-block: clamp(36px, 6vw, 78px) 64px; }
+.shop-intro { margin-bottom: 30px; }
+.shop-intro .section-label { color: var(--green); margin-bottom: 12px; }
+.shop-intro h1 { margin: 0; font-size: clamp(2.8rem, 7vw, 6.75rem); letter-spacing: -.075em; line-height: .98; font-weight: 650; }
+.shop-intro h1 span { color: var(--green); }
+.shop-intro > p:last-child { color: var(--muted); margin: 16px 0 0; }
+.shop-categories, .shop-departments { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.shop-categories button {
+  position: relative; isolation: isolate; display: flex; align-items: end;
+  width: 100%; min-width: 0; min-height: 190px; aspect-ratio: 1.24; overflow: hidden; text-align: left; padding: 16px;
+  border: 1px solid var(--line); border-radius: 16px; cursor: pointer; background: #20221f;
+}
+.shop-categories button::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, #000f, #0002 75%); }
+.shop-categories img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.shop-categories button span { color: #d3d2d4; font-size: .8rem; }
+.shop-categories strong { display: block; color: var(--white); font-size: clamp(1.1rem, 2vw, 1.65rem); line-height: 1.15; margin-top: 3px; }
+.shop-categories button:hover, .shop-categories button[aria-pressed="true"] { border-color: var(--green); }
+.shop-categories button[aria-pressed="true"] strong { color: var(--green); }
+.shop button:focus-visible, .shop .catalog-search:focus-within { outline: 2px solid var(--green); outline-offset: 4px; }
+.shop-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-block: 36px 16px; }
+.shop-bar h2, .shop-visit h2 { margin: 0; font-size: 1.5rem; letter-spacing: -.035em; font-weight: 700; }
+.shop-bar h2 { margin-right: auto; }
+.shop-bar button { color: var(--green); text-decoration: underline; cursor: pointer; padding: 8px; }
+.shop-bar .catalog-search { min-width: 0; width: min(100%, 330px); }
+.shop-departments article { background: #141714; border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+.shop-departments h3 { margin: 0 0 10px; font-weight: 700; }
+.shop-departments ul { margin: 0; padding-left: 16px; list-style: disc; color: var(--muted); font-size: .9rem; line-height: 1.7; }
+.shop-departments li::marker { color: var(--green); }
+.shop-visit { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 32px; background: #171b17; border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
+.shop-visit > div { flex: 1 1 300px; }
+.shop-visit p { color: var(--muted); margin: 4px 0 0; }
+@media (max-width: 760px) {
+  .shop-categories, .shop-departments { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .shop-categories button { min-height: 128px; padding: 11px; }
+}

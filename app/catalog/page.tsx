@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import CatalogExplorer from "./CatalogExplorer";
-import { catalogCategories } from "./catalog-data";
+import "./storefront.css";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function CatalogPage() {
   return (
-    <main className="catalog-page">
+    <main className="catalog-page storefront">
       <div className="age-note">21+ • Please enjoy responsibly</div>
 
       <header className="catalog-nav shell">
@@ -28,47 +28,7 @@ export default function CatalogPage() {
         </nav>
       </header>
 
-      <section className="catalog-hero" aria-labelledby="catalog-page-title">
-        <div className="catalog-hero__orbit" aria-hidden="true">
-          {catalogCategories.map((category, index) => (
-            <figure className={`catalog-hero__tile catalog-hero__tile--${index + 1}`} key={category.id}>
-              <img src={`${basePath}${category.image}`} alt="" />
-            </figure>
-          ))}
-          <span className="catalog-hero__signal">#</span>
-        </div>
-        <div className="catalog-hero__content shell">
-          <p className="section-label">The selection • North Austin</p>
-          <h1 id="catalog-page-title">Every product.<br /><span>Easy to explore.</span></h1>
-          <p>
-            Search the complete catalog, filter by category, and compare the details
-            in one place. Call to confirm today&apos;s availability before you arrive.
-          </p>
-          <div className="catalog-hero__actions">
-            <a className="button button--primary" href="#browse">Browse categories</a>
-            <a className="button button--glass" href="tel:+15125687868">(512) 568-7868</a>
-          </div>
-        </div>
-        <a className="catalog-hero__back" href={`${basePath}/`}>← Back to home</a>
-      </section>
-
       <CatalogExplorer />
-
-      <section className="catalog-assist">
-        <div className="catalog-assist__hash" aria-hidden="true">#</div>
-        <div className="catalog-assist__content shell">
-          <p className="section-label">Need a real answer?</p>
-          <h2>Tell us what you like.<br />We&apos;ll narrow it down.</h2>
-          <p>
-            Selection moves fast. Call before your visit for current stock, or stop in
-            and we&apos;ll help you build the right setup in person.
-          </p>
-          <div>
-            <a className="button button--primary" href="tel:+15125687868">Call for stock</a>
-            <a className="button button--glass" href="https://www.google.com/maps/dir/?api=1&destination=10014+N+Lamar+Blvd+Austin+TX+78753" target="_blank" rel="noreferrer">Get directions ↗</a>
-          </div>
-        </div>
-      </section>
 
       <footer className="footer shell catalog-footer">
         <div className="footer__brand">
