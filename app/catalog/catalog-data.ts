@@ -68,7 +68,7 @@ export const catalogCategories: CatalogCategory[] = [
   {
     id: "botanicals",
     name: "Botanicals & edibles",
-    eyebrow: "Preview assortment",
+    eyebrow: "Flower & gummies",
     description: "Reference listings for botanicals and edibles.",
     image: "",
     alt: "",

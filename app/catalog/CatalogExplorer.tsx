@@ -47,9 +47,9 @@ export default function CatalogExplorer() {
   return (
     <section className="shop shell" id="browse" aria-labelledby="all-products-title">
       <div className="shop-intro">
-        <p className="section-label">The North Lamar storefront</p>
-        <h1 id="all-products-title">Shop the <span>catalog.</span></h1>
-        <p>{catalogIsPreview ? "Preview assortment with sample prices. Products, prices, and stock are not confirmed for # Smoke Shop." : hasProducts ? "Browse products and build your cart. Online checkout isn’t open yet." : "Explore our departments while we prepare the online product listings."}</p>
+        <p className="section-label"># Smoke Shop · North Austin</p>
+        <h1 id="all-products-title">Shop <span>catalog</span></h1>
+        <p>{catalogIsPreview ? "Sample prices only. We haven’t confirmed what’s in stock." : hasProducts ? "Online checkout isn’t available yet." : "Products aren’t listed online yet."}</p>
       </div>
 
       {hasProducts && <div className="shop-options">
@@ -111,7 +111,7 @@ export default function CatalogExplorer() {
                   ) : (
                     <div className="shop-product-placeholder" aria-hidden="true"><b>#</b><small>{category?.name}</small></div>
                   )}
-                  {product.illustrativeImage ? <em>Category illustration</em> : product.availability && <em>{product.availability}</em>}
+                  {product.illustrativeImage ? <em>Example image</em> : product.availability && <em>{product.availability}</em>}
                 </div>
                 <div className="catalog-product__copy">
                   <p>{product.brand ?? category?.name}</p>
@@ -147,7 +147,7 @@ export default function CatalogExplorer() {
       )}
       <section className="shop-cart" aria-labelledby="cart-title">
         <h2 id="cart-title" aria-live="polite">Your cart ({itemCount})</h2>
-        {itemCount === 0 ? <p>{hasProducts ? "Add a product to get started." : "You’ll be able to add items when product listings are available."}</p> : (
+        {itemCount === 0 ? <p>Your cart is empty.</p> : (
           <ul>
             {catalogProducts.filter(({ id }) => cart[id] > 0).map(({ id, name, priceCents }) => (
               <li key={id}>
@@ -162,7 +162,7 @@ export default function CatalogExplorer() {
             ))}
           </ul>
         )}
-        <p>Checkout is not available yet. Adding items does not place an order.</p>
+        <p>You can add items, but you can’t place an order yet.</p>
       </section>
       {!catalogIsPreview && <aside className="shop-visit">
         <div><h2>Find it in-store</h2><p>Online product listings are not live inventory. Call to check availability.</p></div>
